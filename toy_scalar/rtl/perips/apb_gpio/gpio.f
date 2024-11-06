@@ -1,0 +1,1 @@
+$TOY_SCALAR_PATH/rtl/perips/apb_gpio/apb_gpio.v

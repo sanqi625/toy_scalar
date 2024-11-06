@@ -1,0 +1,152 @@
+Command: vcs -kdb -full64 -debug_access -sverilog -f /data/usr/qijiahuan/toy_scalar/rtl/sim.f \
+-CFLAGS -DVCS +lint=PCWM +lint=TFIPC-L +define+TOY_SIM +define+DEBUG_ROM_TEST -l \
+cmp.log -timescale=1ns/1ps
+                         Chronologic VCS (TM)
+         Version T-2022.06_Full64 -- Tue Nov  5 09:51:41 2024
+
+                    Copyright (c) 1991 - 2022 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/toy_pack.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug_pack.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/async_fifo/fifomem.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/async_fifo/rptr_empty.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/async_fifo/sync_r2w.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/async_fifo/sync_w2r.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/async_fifo/wptr_full.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/async_fifo/async_fifo.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/debug_rtl/cdc_dmi_async.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/debug_rtl/debug_rom.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/debug_rtl/debug_ram.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/debug_rtl/dtm_jtag.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/debug_rtl/dtm_reg_bnk.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/debug_rtl/access_reg_decode.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/debug_rtl/debug_module.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/debug/debug_rtl/debug_sys.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DDec_node_arb_itcm_pld_type_ToyBusAck_forward_False.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_CmnAgeMtx_width_2.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DArb_node_arb_itcm_pld_type_ToyBusReq_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DArb2ch_node_arb_itcm_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DDec_node_arb_dtcm_pld_type_ToyBusAck_forward_False.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DArb_node_arb_dtcm_pld_type_ToyBusReq_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DArb2ch_node_arb_dtcm_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DDec_node_arb_lsu_dbg_pld_type_ToyBusAck_forward_False.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DArb_node_arb_lsu_dbg_pld_type_ToyBusReq_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DArb2ch_node_arb_lsu_dbg_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_CmnAgeMtx_width_4.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DArb_node_dec_dmem_pld_type_ToyBusAck_forward_False.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DDec_node_dec_dmem_pld_type_ToyBusReq_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DDec2ch_node_dec_dmem_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DArb_node_dec_lsu_pld_type_ToyBusAck_forward_False.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DDec_node_dec_lsu_pld_type_ToyBusReq_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DDec2ch_node_dec_lsu_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DArb_node_dec_fetch_pld_type_ToyBusAck_forward_False.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DDec_node_dec_fetch_pld_type_ToyBusReq_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DDec2ch_node_dec_fetch_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_ToyDbgMst_node_peripheral_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_ToyDbgMst_node_debug_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_ToyMemMst_node_eslv_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_ToyMemMst_node_dtcm_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_ToyMemMst_node_itcm_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_ToyCoreSlv_node_debug_sysbus_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_ToyCoreSlv_node_lsu_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_ToyCoreSlv_node_fetch_fwd_pld_type_ToyBusReq_bwd_pld_type_ToyBusAck_forward_True.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DWrap_network_toy_bus.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/perips/apb_uart/io_generic_fifo.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/perips/apb_uart/uart_interrupt.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/perips/apb_uart/uart_rx.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/perips/apb_uart/uart_tx.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/perips/apb_uart/apb_uart.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/perips/apb_gpio/apb_gpio.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/perips/perips_sys.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/perips/sysbus2apb.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/bus/apb_bus/apb_bus.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_ext_inter.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_fetch_queue.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_fetch_queue2.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_fetch2.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_fetch3.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_decoder.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_dispatch.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_lsu.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_alu.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_mext.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_csr.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_spu.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_trap.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_commit.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_rtu.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_core.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/core/toy_regfile.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/toy_scalar.sv'
+Parsing design file '/tools/software/synopsys/syn/T-2022.03-SP2/dw/sim_ver/DW_div.v'
+Parsing included file '/tools/software/synopsys/syn/T-2022.03-SP2/dw/sim_ver/DW_div_function.inc'.
+Back to file '/tools/software/synopsys/syn/T-2022.03-SP2/dw/sim_ver/DW_div.v'.
+Parsing design file '/tools/software/synopsys/syn/T-2022.03-SP2/dw/sim_ver/DW02_mult.v'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/mem/toy_mem_model.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/toy_env_slv.sv'
+Parsing design file '/data/usr/qijiahuan/toy_scalar/rtl/toy_top.sv'
+Top Level Modules:
+       dm_debug_rom
+       toy_fetch_queue
+       toy_fecth2
+       toy_top
+TimeScale is 1 ns / 1 ps
+
+Lint-[PCWM-L] Port connection width mismatch
+/data/usr/qijiahuan/toy_scalar/rtl/bus/toy_bus_DWrap_network_toy_bus/toy_bus_DArb_node_dec_dmem_pld_type_ToyBusAck_forward_False.v, 160
+"toy_bus_CmnAgeMtx_width_4 arb_msg( .clk (clk),  .rst_n (rst_n),  .update_en (arb_msg_update_en),  .age_bits_row_0 (arb_msg_age_bits_row_0),  .age_bits_row_1 (arb_msg_age_bits_row_1),  .age_bits_row_2 (arb_msg_age_bits_row_2),  .age_bits_row_3 (arb_msg_age_bits_row_3));"
+  The following 1-bit expression is connected to 4-bit port "update_en" of 
+  module "toy_bus_CmnAgeMtx_width_4", instance "arb_msg".
+  Expression: arb_msg_update_en
+  The expression is from module 
+  toy_bus_DArb_node_dec_dmem_pld_type_ToyBusAck_forward_False, instance u_arb 
+
+
+Lint-[PCWM-L] Port connection width mismatch
+/data/usr/qijiahuan/toy_scalar/rtl/toy_top.sv, 155
+"toy_mem_model #("DATA_HEX", , 15, toy_pack::BUS_DATA_WIDTH) u_data_mem( .clk (clk),  .en (dtcm_mem_en),  .addr (dtcm_mem_addr),  .rd_data (dtcm_mem_rd_data),  .wr_data (dtcm_mem_wr_data),  .wr_byte_en (dtcm_mem_wr_byte_en),  .wr_en (dtcm_mem_wr_en));"
+  The following 32-bit expression is connected to 15-bit port "addr" of module
+  "toy_mem_model", instance "u_data_mem".
+  Expression: dtcm_mem_addr
+  The expression is from module toy_top
+
+Starting vcs inline pass...
+
+27 modules and 0 UDP read.
+recompiling module toy_bus_DWrap_network_toy_bus
+	However, due to incremental compilation, only 1 module needs to be compiled. 
+make[1]: Entering directory '/data/usr/qijiahuan/toy_scalar/work/rtl_compile/csrc' \
+
+rm -f _cuarc*.so _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+ld -shared  -Bsymbolic   -o .//../simv.daidir//_cuarc0.so objs/amcQw_d.o 
+rm -f _cuarc0.so
+if [ -x ../simv ]; then chmod a-x ../simv; fi
+g++  -o ../simv   -no-pie    -rdynamic  -Wl,-rpath='$ORIGIN'/simv.daidir -Wl,-rpath=./simv.daidir \
+-Wl,-rpath=/tools/software/synopsys/vcs/T-2022.06/linux64/lib -L/tools/software/synopsys/vcs/T-2022.06/linux64/lib \
+-Wl,-rpath-link=./ -Wl,--no-as-needed  toy_scalar_disasm_sv_wrapper.o riscv_disas.o \
+_1210981_archive_1.so _prev_archive_1.so _cuarc0.so  SIM_l.o      rmapats_mop.o rmapats.o \
+rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o           -lnuma -lvirsim -lerrorinf \
+-lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /tools/software/synopsys/vcs/T-2022.06/linux64/lib/vcs_tls.o \
+-Wl,-whole-archive  -lvcsucli    -Wl,-no-whole-archive       ./../simv.daidir/vc_hdrs.o \
+_vcs_pli_stub_.o   /tools/software/synopsys/vcs/T-2022.06/linux64/lib/vcs_save_restore_new.o \
+/tools/software/synopsys/verdi/T-2022.06/share/PLI/VCS/LINUX64/pli.a -ldl  -lc -lm \
+-lpthread -ldl 
+../simv up to date
+make[1]: Leaving directory '/data/usr/qijiahuan/toy_scalar/work/rtl_compile/csrc' \
+
+CPU time: 1.444 seconds to compile + .326 seconds to elab + .393 seconds to link
+Verdi KDB elaboration done and the database successfully generated: 0 error(s), 0 warning(s)

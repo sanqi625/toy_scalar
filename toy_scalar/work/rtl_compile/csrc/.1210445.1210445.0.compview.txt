@@ -1,0 +1,9 @@
+{"vcs1":{"timestamp_begin":1730771501.778665554, "rt":2.95, "ut":1.23, "st":0.15}}
+{"vcselab":{"timestamp_begin":1730771504.803540197, "rt":2.01, "ut":0.23, "st":0.06}}
+{"link":{"timestamp_begin":1730771506.883199438, "rt":0.28, "ut":0.18, "st":0.12}}
+{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1730771501.174738220}
+{"VCS_COMP_START_TIME": 1730771501.174738220}
+{"VCS_COMP_END_TIME": 1730771507.337090573}
+{"VCS_USER_OPTIONS": "-kdb -full64 -debug_access -sverilog -f /data/usr/qijiahuan/toy_scalar/rtl/sim.f -CFLAGS -DVCS +lint=PCWM +lint=TFIPC-L +define+TOY_SIM +define+DEBUG_ROM_TEST -l cmp.log -timescale=1ns/1ps"}
+{"vcs1": {"peak_mem": 1210981}}
+{"stitch_vcselab": {"peak_mem": 1211076}}

@@ -1,0 +1,37 @@
+[INFO] add fetch to network.
+[INFO] add lsu to network.
+[INFO] add debug_sysbus to network.
+[INFO] add itcm to network.
+[INFO] add dtcm to network.
+[INFO] add eslv to network.
+[INFO] add debug to network.
+[INFO] add peripheral to network.
+[INFO] add dec_fetch to network.
+[INFO] add dec_lsu to network.
+[INFO] add dec_dmem to network.
+[INFO] add arb_lsu_dbg to network.
+[INFO] add arb_dtcm to network.
+[INFO] add arb_itcm to network.
+[INFO] link fetch to dec_fetch.
+[INFO] link lsu to arb_lsu_dbg.
+[INFO] link debug_sysbus to arb_lsu_dbg.
+[INFO] link arb_lsu_dbg to dec_lsu.
+[INFO] link dec_fetch to arb_itcm.
+[INFO] link dec_lsu to arb_itcm.
+[INFO] link dec_fetch to arb_dtcm.
+[INFO] link dec_lsu to arb_dtcm.
+[INFO] link arb_itcm to itcm.
+[INFO] link arb_dtcm to dec_dmem.
+[INFO] link dec_dmem to dtcm.
+[INFO] link dec_dmem to eslv.
+[INFO] link dec_dmem to debug.
+[INFO] link dec_dmem to peripheral.
+[INFO] network topology graphic generation start.
+[INFO] set fetch nx_layer to -100.
+[INFO] set lsu nx_layer to -100.
+[INFO] set debug_sysbus nx_layer to -100.
+[INFO] set itcm nx_layer to 100.
+[INFO] set dtcm nx_layer to 100.
+[INFO] set eslv nx_layer to 100.
+[INFO] set debug nx_layer to 100.
+[INFO] set peripheral nx_layer to 100.
