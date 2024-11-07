@@ -40,7 +40,27 @@ module toy_lsu
 
     input  logic                      mem_ack_vld         ,
     output logic                      mem_ack_rdy         ,
-    input  logic [DATA_WIDTH-1:0]     mem_ack_data        
+    input  logic [DATA_WIDTH-1:0]     mem_ack_data        ,
+
+    //csr bus
+    input  logic [1:0]                csr_op              ,       //csr_op[1]---R, csr_op[0]---W
+    input  logic [2:0]                csr_funct3          , 
+    input  logic [4:0]                csr_imm             ,      
+    input  logic [ADDR_WIDTH-1:0]     csr_addr            ,
+    input  logic [ADDR_WIDTH-1:0]     csr_valid           ,
+    input  logic                      csr_rrsp            ,       //csr module read rsp 
+    output logic [ADDR_WIDTH-1:0]     csr_rdata           ,       //csr read data
+    output logic                      csr_rvalid          ,       //csr read valid 
+    output logic                      csr_reg_rsp         ,       //0---normal  1---exception
+
+    //pmp port
+    input  logic [2:0]                mode_state          ,
+
+    //fetch port
+    input  logic [ADDR_WIDTH-1:0]     fetch_req_addr      ,
+    input  logic [1:0]                fetch_req_mode      ,
+    output logic                      fetch_addr_pass 
+
 
 );
 
@@ -235,11 +255,102 @@ module toy_lsu
 
 
 //===================================================================
+// CSR Bus
+//===================================================================
+
+//pmp port
+logic   [ADDR_WIDTH-1:0]        pmp_rdata   ;
+logic                           pmp_rvalid  ;
+logic                           pmp_act_rsp ;       //pmp_act_rsp: 0----normal  1----exception
+logic                           pmp_rrsp    ;
+logic   [ADDR_WIDTH-1:0]        pmp_addr    ;
+logic   [4:0]                   pmp_csr_imm ;
+logic   [REG_WIDTH-1:0]         pmp_rs1_val ;
+logic   [2:0]                   pmp_funct3  ;
+logic   [1:0]                   pmp_reg_op  ;
+logic                           pmp_reg_en  ;   
+
+csr_bus #(
+    .ADDR_WIDTH (ADDR_WIDTH)    ,
+    .REG_WIDTH  (REG_WIDTH )    
+) u_csr_bus (
+    .csr_op      (csr_op),       //csr_op[1]---R, csr_op[0]---W
+    .csr_funct3  (csr_funct3), 
+    .csr_imm     (csr_imm   ),
+    .rs1_val     (rs1_val   ),      
+    .csr_addr    (csr_addr  ),
+    .csr_valid   (csr_valid  ),
+    .csr_rrsp    (csr_rrsp   ),       //csr module read rsp 
+    .csr_rdata   (csr_rdata  ),       //csr read data
+    .csr_rvalid  (csr_rvalid ),       //csr rsp valid 
+    .csr_reg_rsp (csr_reg_rsp),       //0---normal  1---exception
+
+    .pmp_rdata   (pmp_rdata  ),
+    .pmp_rvalid  (pmp_rvalid ),
+    .pmp_act_rsp (pmp_act_rsp),       //pmp_act_rsp: 0----normal  1----exception
+    .pmp_rrsp    (pmp_rrsp   ),
+    .pmp_addr    (pmp_addr   ),
+    .pmp_csr_imm (pmp_csr_imm),
+    .pmp_rs1_val (pmp_rs1_val),
+    .pmp_funct3  (pmp_funct3 ),
+    .pmp_reg_op  (pmp_reg_op ),
+    .pmp_reg_en  (pmp_reg_en )
+);
+
+//===================================================================
+// PMP
+//===================================================================
+
+logic [ADDR_WIDTH-1:0]              v_req_addr   [1:0]  ;
+logic [1:0]                         v_req_mode   [1:0]  ; //instruction mode：01--load; 10--store; 11--fetc
+logic [1:0]                         v_pass              ;
+logic                               lsu_access_exception;
+
+//lsu addr check
+assign v_req_addr[0] = raw_address;
+assign v_req_mode[0] = (is_store | amo_store) ? 2'b10 : 2'b01;
+assign lsu_access_exception = ~v_pass[0] & mem_req_vld;
+
+//fetch addr check
+assign v_req_addr[1] = fetch_req_addr;
+assign v_req_mode[1] = fetch_req_mode;
+assign fetch_addr_pass = v_pass[1];
+
+pmp #(
+    .PMP_CHANNEL_NUM ('d32)    ,//the num of pmp addr and cfg
+    .REQ_CHANNEL_NUM ('d2 )    ,//the num of addr which need to check
+    .REG_WIDTH       ('d32)    ,
+    .ADDR_WIDTH      ('d32)
+) u_pmp(    
+    .clk            (clk           ),
+    .rst_n          (rst_n         ),
+    //csr_bus
+    .csr_req_en     (pmp_reg_en    ),
+    .csr_req_op     (pmp_req_op    ), //csr_op[1]---R, csr_op[0]---W
+    .csr_funct3     (pmp_funct3    ),
+    .csr_imm        (pmp_csr_imm   ),
+    .rs1_val        (pmp_rs1_val   ),
+    .csr_rrsp       (pmp_rrsp      ),
+    .csr_req_addr   (pmp_addr      ),
+    .csr_req_rdata  (pmp_rdata     ),
+    .csr_req_rvalid (pmp_rvalid    ),
+    .csr_act_rsp    (pmp_act_rsp   ),
+    //pmp_port
+    .mode_state     (mode_state    ),
+    .v_req_addr     (v_req_addr    ),
+    .v_req_mode     (v_req_mode    ),//instruction mode：01--load; 10--store; 11--fetc
+    .v_pass         (v_pass        )
+);
+
+
+//===================================================================
 // Exception
 //===================================================================
     assign lsu_pc                               = pc;
-    assign lsu_exception_cause                  = 32'd0;
-    assign lsu_exception_en                     = 1'b0;
+    assign lsu_exception_cause                  = lsu_access_exception ? ((is_lr|is_sc|is_store) ? 32'd7 
+                                                                                                  :32'd5) 
+                                                                                                  :32'd0;
+    assign lsu_exception_en                     = lsu_access_exception;
     assign lsu_exception_inst[INST_WIDTH-1:0]   = instruction_pld[INST_WIDTH-1:0];
 
 

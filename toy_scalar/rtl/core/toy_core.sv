@@ -266,7 +266,7 @@ module toy_core
         .rtu_lock           (rtu_pc_lock                ),
         .debug_step_en      (debug_step_en               ),
         .debug_step_release (debug_step_release          ),
-        .jb_pc_release_en   (1'b0          ),
+        .jb_pc_release_en   (1'b0            ),
         .jb_pc_update_en    (1'b0            ),
         .jb_pc_val          (jb_pc_val                  ),
         .instruction_vld    (fetched_instruction_vld    ),

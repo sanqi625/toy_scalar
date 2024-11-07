@@ -365,6 +365,24 @@ package toy_pack;
         logic [1:0]  prv        ;       // done
     } dcsr_t;
 
+    // PMP Package ---/////////////////////////////////////////
+
+    typedef enum logic[1:0] { 
+        OFF   = 2'b00,
+        TOR   = 2'b01,
+        NA4   = 2'b10,
+        NAPOT = 2'b11
+    } A_mode_t;
+
+    typedef struct packed {
+        logic        lock  ; 
+        logic [1:0]  rsv   ;    //Reserve
+        logic [1:0]  a     ;
+        logic        x     ;
+        logic        w     ;
+        logic        r     ;
+    } pmp_cfg_t;
+
     //typedef enum logic [2:0] {
     //    CF3_ADDI4SPN    = 3'b000,
     //    CF3_LW          = 3'b010,

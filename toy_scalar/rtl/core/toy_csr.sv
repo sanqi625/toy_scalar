@@ -58,6 +58,21 @@ module toy_csr
     output logic [REG_WIDTH-1:0]      csr_mepc_val        ,
     output logic [REG_WIDTH-1:0]      csr_dpc_val         ,
 
+    //csr bus
+    output logic   [1:0]              csr_bus_op          ,       //csr_op[1]---R, csr_op[0]---W
+    output logic   [2:0]              csr_bus_funct3      , 
+    output logic   [4:0]              csr_bus_imm         ,
+    //output logic   [REG_WIDTH-1:0]    rs1_val             ,      
+    output logic   [ADDR_WIDTH-1:0]   csr_bus_addr        ,
+    output logic   [ADDR_WIDTH-1:0]   csr_bus_valid       ,
+    output logic                      csr_bus_rrsp        ,       //csr module read rsp 
+    input  logic   [ADDR_WIDTH-1:0]   csr_bus_rdata       ,       //csr read data
+    input  logic                      csr_bus_rvalid      ,       //csr read valid 
+    input  logic                      csr_bus_reg_rsp     ,       //0---normal  1---exception
+
+    //pmp_port
+    output logic   [2:0]              mode_state          ,
+
     //debug state
     output logic                      debug_mode_en       , 
     output logic                      debug_ebreakm       ,
@@ -77,7 +92,7 @@ module toy_csr
     logic [ADDR_WIDTH-1:0]  dscratch0;
     logic [ADDR_WIDTH-1:0]  dscratch1;
 
-    logic [2:0]             mode_state;
+
     logic                   debug_csr_wr;
     logic                   debug_req_en;
     logic                   exit_debug_en;
@@ -132,12 +147,12 @@ module toy_csr
     assign reg_val   = csr_rdata                            ;
     assign reg_wr_en = csr_wren                             ;
     assign reg_inst_idx = instruction_idx                   ;
-    assign inst_commit_en = instruction_vld                 ;
+    assign inst_commit_en = csr_bus_valid ? csr_bus_rvalid : instruction_vld  ;
     
     assign csr_addr  = instruction_pld`INST_FIELD_FUNCT12   ;
     assign funct12   = instruction_pld`INST_FIELD_FUNCT12   ;
 
-    assign instruction_rdy = 1'b1;
+    assign instruction_rdy = csr_bus_valid ? csr_bus_rvalid : 1'b1;
 
     assign trap_rdy = 1'b1;
 
@@ -158,7 +173,15 @@ module toy_csr
     //     else                            csr_wren = 1'b0;
     // end
 
-    assign csr_wren = inst_rd_en & instruction_vld;
+    //csr bus 
+    assign csr_bus_valid = (csr_addr>=12'h3a0) & (csr_addr<=12'h3ef); 
+    assign csr_bus_op = 2'b11;
+    assign csr_bus_funct3 = funct3;
+    assign csr_bus_imm = csr_imm;
+    assign csr_bus_addr = csr_addr;
+    assign csr_bus_rrsp = 1'b1;
+
+    assign csr_wren = inst_rd_en & instruction_vld & ~csr_bus_valid;
 
     
     always_comb begin
@@ -197,60 +220,66 @@ module toy_csr
     //============================================================================================
 
     always_comb begin
-        case(csr_addr)
+        if(csr_bus_valid)
+            csr_rdata = csr_bus_rdata;
+        else begin 
+            case(csr_addr)
 
-        // Unprivileged Counter/Timers ==================================================
-        CSR_ADDR_CYCLE      : csr_rdata = csr_CYCLE[REG_WIDTH-1:0]                  ;
-        CSR_ADDR_CYCLEH     : csr_rdata = csr_CYCLE[2*REG_WIDTH-1:REG_WIDTH]        ;
-        CSR_ADDR_TIME       : csr_rdata = csr_CYCLE[REG_WIDTH-1:0]                  ;       // tmp
-        CSR_ADDR_TIMEH      : csr_rdata = csr_CYCLE[2*REG_WIDTH-1:REG_WIDTH]        ;
-        CSR_ADDR_INSTRET    : csr_rdata = csr_INSTRET[REG_WIDTH-1:0]                ;
-        CSR_ADDR_INSTRETH   : csr_rdata = csr_INSTRET[2*REG_WIDTH-1:REG_WIDTH]      ;
-        
-        // Machine Information Registers ================================================
-        CSR_ADDR_MVENDORID  : csr_rdata = 32'b0                                     ;       // use 0 because this is not a commercial impl.
-        CSR_ADDR_MARCHID    : csr_rdata = 32'b0                                     ;       // 
-        CSR_ADDR_MIMPID     : csr_rdata = 32'b0                                     ;       //
-        CSR_ADDR_MHARTID    : csr_rdata = 32'b1                                     ;
-        //CSR_ADDR_MCONFIGPTR : csr_rdata = 32'b0                                     ;       // config ptr not impl.
+            // Unprivileged Counter/Timers ==================================================
+            CSR_ADDR_CYCLE      : csr_rdata = csr_CYCLE[REG_WIDTH-1:0]                  ;
+            CSR_ADDR_CYCLEH     : csr_rdata = csr_CYCLE[2*REG_WIDTH-1:REG_WIDTH]        ;
+            CSR_ADDR_TIME       : csr_rdata = csr_CYCLE[REG_WIDTH-1:0]                  ;       // tmp
+            CSR_ADDR_TIMEH      : csr_rdata = csr_CYCLE[2*REG_WIDTH-1:REG_WIDTH]        ;
+            CSR_ADDR_INSTRET    : csr_rdata = csr_INSTRET[REG_WIDTH-1:0]                ;
+            CSR_ADDR_INSTRETH   : csr_rdata = csr_INSTRET[2*REG_WIDTH-1:REG_WIDTH]      ;
 
-        // Machine Trap Setup ===========================================================
-        CSR_ADDR_MSTATUS    : csr_rdata = csr_MSTATUS                               ;
-        CSR_ADDR_MISA       : csr_rdata = 32'b01000000_00000000_00000001_00000000   ;       // stands for rv32i
-        CSR_ADDR_MEDELEG    : csr_rdata = csr_MEDELEG                               ;
-        CSR_ADDR_MIDELEG    : csr_rdata = csr_MIDELEG                               ;
-        CSR_ADDR_MIE        : csr_rdata = csr_MIE                                   ;
-        CSR_ADDR_MTVEC      : csr_rdata = csr_MTVEC                                 ;       // trap handler base address.
-        //CSR_ADDR_MCOUNTEREN : csr_rdata = 32'b0                                     ;       // not impl for only M mode system.
-        //CSR_ADDR_MSTATUSH   : csr_rdata = 32'b0                                     ;       // mbe=0, sbe=0, always little endian
+            // Machine Information Registers ================================================
+            CSR_ADDR_MVENDORID  : csr_rdata = 32'b0                                     ;       // use 0 because this is not a commercial impl.
+            CSR_ADDR_MARCHID    : csr_rdata = 32'b0                                     ;       // 
+            CSR_ADDR_MIMPID     : csr_rdata = 32'b0                                     ;       //
+            CSR_ADDR_MHARTID    : csr_rdata = 32'b1                                     ;
+            //CSR_ADDR_MCONFIGPTR : csr_rdata = 32'b0                                     ;       // config ptr not impl.
 
-        // Machine Trap Handling ========================================================
-        CSR_ADDR_MSCRATCH   : csr_rdata = csr_MSCRATCH                              ;
-        CSR_ADDR_MEPC       : csr_rdata = csr_MEPC                                  ;
-        CSR_ADDR_MCAUSE     : csr_rdata = csr_MCAUSE                                ;
-        CSR_ADDR_MTVAL      : csr_rdata = csr_MTVAL                                 ;
-        CSR_ADDR_MIP        : csr_rdata = csr_MIP                                   ;
-        //CSR_ADDR_MTINST     : csr_rdata = 32'b0                                     ;       // not impl
-        //CSR_ADDR_MTVAL2     : csr_rdata = 32'b0                                     ;       // not impl
+            // Machine Trap Setup ===========================================================
+            CSR_ADDR_MSTATUS    : csr_rdata = csr_MSTATUS                               ;
+            CSR_ADDR_MISA       : csr_rdata = 32'b01000000_00000000_00000001_00000000   ;       // stands for rv32i
+            CSR_ADDR_MEDELEG    : csr_rdata = csr_MEDELEG                               ;
+            CSR_ADDR_MIDELEG    : csr_rdata = csr_MIDELEG                               ;
+            CSR_ADDR_MIE        : csr_rdata = csr_MIE                                   ;
+            CSR_ADDR_MTVEC      : csr_rdata = csr_MTVEC                                 ;       // trap handler base address.
+            //CSR_ADDR_MCOUNTEREN : csr_rdata = 32'b0                                     ;       // not impl for only M mode system.
+            //CSR_ADDR_MSTATUSH   : csr_rdata = 32'b0                                     ;       // mbe=0, sbe=0, always little endian
 
-        // Machine Counter/Timers =======================================================
-        CSR_ADDR_MCYCLE     : csr_rdata = csr_CYCLE[REG_WIDTH-1:0]                  ;
-        CSR_ADDR_MCYCLEH    : csr_rdata = csr_CYCLE[2*REG_WIDTH-1:REG_WIDTH]        ;
-        CSR_ADDR_MINSTRET   : csr_rdata = csr_INSTRET[REG_WIDTH-1:0]                ;
-        CSR_ADDR_MINSTRETH  : csr_rdata = csr_INSTRET[2*REG_WIDTH-1:REG_WIDTH]      ;
+            // Machine Trap Handling ========================================================
+            CSR_ADDR_MSCRATCH   : csr_rdata = csr_MSCRATCH                              ;
+            CSR_ADDR_MEPC       : csr_rdata = csr_MEPC                                  ;
+            CSR_ADDR_MCAUSE     : csr_rdata = csr_MCAUSE                                ;
+            CSR_ADDR_MTVAL      : csr_rdata = csr_MTVAL                                 ;
+            CSR_ADDR_MIP        : csr_rdata = csr_MIP                                   ;
+            //CSR_ADDR_MTINST     : csr_rdata = 32'b0                                     ;       // not impl
+            //CSR_ADDR_MTVAL2     : csr_rdata = 32'b0                                     ;       // not impl
 
-        // Non-Standard MTIME Compare ===================================================
-        CSR_ADDR_MTIMECMP   : csr_rdata = csr_MTIMECMP[31:0]                        ;
-        CSR_ADDR_MTIMECMPH  : csr_rdata = csr_MTIMECMP[63:32]                       ;
+            // Machine Counter/Timers =======================================================
+            CSR_ADDR_MCYCLE     : csr_rdata = csr_CYCLE[REG_WIDTH-1:0]                  ;
+            CSR_ADDR_MCYCLEH    : csr_rdata = csr_CYCLE[2*REG_WIDTH-1:REG_WIDTH]        ;
+            CSR_ADDR_MINSTRET   : csr_rdata = csr_INSTRET[REG_WIDTH-1:0]                ;
+            CSR_ADDR_MINSTRETH  : csr_rdata = csr_INSTRET[2*REG_WIDTH-1:REG_WIDTH]      ;
 
-        // Debug register data ===========================================================
-        CSR_ADDR_DCSR       : csr_rdata = csr_DCSR                                  ;
-        CSR_ADDR_DPC        : csr_rdata = debug_pc                                  ;
-        CSR_ADDR_DSCRATCH0  : csr_rdata = dscratch0[31:0]                           ;
-        CSR_ADDR_DSCRATCH0  : csr_rdata = dscratch1[31:0]                           ;
+            // Non-Standard MTIME Compare ===================================================
+            CSR_ADDR_MTIMECMP   : csr_rdata = csr_MTIMECMP[31:0]                        ;
+            CSR_ADDR_MTIMECMPH  : csr_rdata = csr_MTIMECMP[63:32]                       ;
 
-        default             : csr_rdata = 32'b0                                     ;
-        endcase
+            // Debug register data ===========================================================
+            CSR_ADDR_DCSR       : csr_rdata = csr_DCSR                                  ;
+            CSR_ADDR_DPC        : csr_rdata = debug_pc                                  ;
+            CSR_ADDR_DSCRATCH0  : csr_rdata = dscratch0[31:0]                           ;
+            CSR_ADDR_DSCRATCH0  : csr_rdata = dscratch1[31:0]                           ;
+
+
+
+            default             : csr_rdata = 32'b0                                     ;
+            endcase
+        end 
     end
 
  

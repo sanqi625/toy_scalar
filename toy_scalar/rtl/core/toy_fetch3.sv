@@ -40,7 +40,12 @@ module toy_fecth3
 
     input  logic                      interrupt_vld           ,
     input  logic [31:0]               interrupt_op            ,
-    output logic                      interrupt_rdy           
+    output logic                      interrupt_rdy           ,
+
+    //fetch addr check
+    output logic [ADDR_WIDTH-1:0]     fetch_req_addr          ,
+    output logic [1:0]                fetch_req_mode          ,
+    input  logic                      fetch_addr_pass       
 );
 
     logic [4:0]                     opcode          ;
@@ -173,16 +178,26 @@ module toy_fecth3
     assign instruction_vld  = (queue_vld        && ~pc_lock && ~rtu_lock && (~debug_step_en || step_first_en) ) || interrupt_en || step_insert_en;
     assign queue_rdy        = instruction_rdy   && ~pc_lock && ~rtu_lock  && ~interrupt_en;
 
+    // Addr to Check ===========================================================
+
+    logic   fetch_addr_exception;
+
+    assign fetch_req_addr   = pc;
+    assign fetch_req_mode   = 2'b11;
+    assign fetch_addr_exception = ~fetch_addr_pass;
+
     // Interrupt ===============================================================
 
     assign interrupt_rdy                        = instruction_rdy;
     //assign interrupt_en                         = interrupt_vld && interrupt_rdy;
-    assign interrupt_en                         = interrupt_vld;
+    assign interrupt_en                         = interrupt_vld & fetch_addr_exception;
 
     //instruction op bit[32] is 1 indicates the instruction is trap, bit[32] is 0 indicates is the real instrcution
     //instruction op trap bit[31] is 1 indicates that interrupt, otherwise is exception
 
-    assign instruction_op[32:0]                  = interrupt_en  ? {1'b1,interrupt_op[31:0]} : 33'd0; 
+    assign instruction_op[32:0]                  = interrupt_en  ? fetch_addr_exception ? {1'b1,32'd1} 
+                                                                                        : {1'b1,interrupt_op[31:0]} 
+                                                                                        : 33'd0; 
 
     assign instruction_pld[INST_WIDTH-1:0]       = interrupt_en ? {(INST_WIDTH){1'b0}} : 
                                                     step_insert_en ? step_insert_instruction : fetch_instruction_pld[INST_WIDTH-1:0]; 
