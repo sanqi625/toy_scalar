@@ -236,15 +236,15 @@ module toy_core
     logic                           intr_debug_sync     ;
 
     //csr bus and pmp module
-    logic [1:0]                     csr_op              ;       //csr_op[1]---R, csr_op[0]---W
-    logic [2:0]                     csr_funct3          ; 
-    logic [4:0]                     csr_imm             ;      
-    logic [ADDR_WIDTH-1:0]          csr_addr            ;
-    logic [ADDR_WIDTH-1:0]          csr_valid           ;
-    logic                           csr_rrsp            ;       //csr module read rsp 
-    logic [ADDR_WIDTH-1:0]          csr_rdata           ;       //csr read data
-    logic                           csr_rvalid          ;       //csr read valid 
-    logic                           csr_reg_rsp         ;       //0---normal  1---exception
+    logic [1:0]                     csr_bus_op          ;       //csr_op[1]---R, csr_op[0]---W
+    logic [2:0]                     csr_bus_funct3      ; 
+    logic [4:0]                     csr_bus_imm         ;      
+    logic [ADDR_WIDTH-1:0]          csr_bus_addr        ;
+    logic [ADDR_WIDTH-1:0]          csr_bus_valid       ;
+    logic                           csr_bus_rrsp        ;       //csr module read rsp 
+    logic [ADDR_WIDTH-1:0]          csr_bus_rdata       ;       //csr read data
+    logic                           csr_bus_rvalid      ;       //csr read valid 
+    logic                           csr_bus_reg_rsp     ;       //0---normal  1---exception
     logic [2:0]                     mode_state          ;
 
     toy_ext_inter u_ext_intr(
@@ -449,15 +449,16 @@ module toy_core
         .lsu_exception_cause        (lsu_exception_cause        ),
         .lsu_exception_inst         (lsu_exception_inst         ),
 
-        .csr_op                     (csr_op                     ),       //csr_op[1]---R, csr_op[0]---W
-        .csr_funct3                 (csr_funct3                 ), 
-        .csr_imm                    (csr_imm                    ),      
-        .csr_addr                   (csr_addr                   ),
-        .csr_valid                  (csr_valid                  ),
-        .csr_rrsp                   (csr_rrsp                   ),       //csr module read rsp 
-        .csr_rdata                  (csr_rdata                  ),       //csr read data
-        .csr_rvalid                 (csr_rvalid                 ),       //csr read valid 
-        .csr_reg_rsp                (csr_reg_rsp                ),       //0---normal  1---exception
+        .csr_op                     (csr_bus_op                 ),       //csr_op[1]---R, csr_op[0]---W
+        .csr_funct3                 (csr_bus_funct3             ), 
+        .csr_imm                    (csr_bus_imm                ), 
+        .rs1_val                    (csr_rs1_val                ),     
+        .csr_addr                   (csr_bus_addr               ),
+        .csr_valid                  (csr_bus_valid              ),
+        .csr_rrsp                   (csr_bus_rrsp               ),       //csr module read rsp 
+        .csr_rdata                  (csr_bus_rdata              ),       //csr read data
+        .csr_rvalid                 (csr_bus_rvalid             ),       //csr read valid 
+        .csr_reg_rsp                (csr_bus_reg_rsp            ),       //0---normal  1---exception
         .mode_state                 (mode_state                 ),
 
         .mem_req_vld                (lsu_mem_req_vld            ),
@@ -542,8 +543,7 @@ module toy_core
 
         .csr_bus_op                 (csr_bus_op                 ),       //csr_op[1]---R, csr_op[0]---W
         .csr_bus_funct3             (csr_bus_funct3             ), 
-        .csr_bus_imm                (csr_bus_imm                ),
-        .rs1_val                    (rs1_val                    ),      
+        .csr_bus_imm                (csr_bus_imm                ),      
         .csr_bus_addr               (csr_bus_addr               ),
         .csr_bus_valid              (csr_bus_valid              ),
         .csr_bus_rrsp               (csr_bus_rrsp               ),       //csr module read rsp 

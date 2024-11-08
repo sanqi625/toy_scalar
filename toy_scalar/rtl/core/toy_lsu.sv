@@ -45,6 +45,7 @@ module toy_lsu
     //csr bus
     input  logic [1:0]                csr_op              ,       //csr_op[1]---R, csr_op[0]---W
     input  logic [2:0]                csr_funct3          , 
+    input  logic [REG_WIDTH-1:0]      csr_rs1_val         ,
     input  logic [4:0]                csr_imm             ,      
     input  logic [ADDR_WIDTH-1:0]     csr_addr            ,
     input  logic [ADDR_WIDTH-1:0]     csr_valid           ,
@@ -274,11 +275,11 @@ csr_bus #(
     .ADDR_WIDTH (ADDR_WIDTH)    ,
     .REG_WIDTH  (REG_WIDTH )    
 ) u_csr_bus (
-    .csr_op      (csr_op),       //csr_op[1]---R, csr_op[0]---W
-    .csr_funct3  (csr_funct3), 
-    .csr_imm     (csr_imm   ),
-    .rs1_val     (rs1_val   ),      
-    .csr_addr    (csr_addr  ),
+    .csr_op      (csr_op     ),       //csr_op[1]---R, csr_op[0]---W
+    .csr_funct3  (csr_funct3 ), 
+    .csr_imm     (csr_imm    ),
+    .rs1_val     (csr_rs1_val),      
+    .csr_addr    (csr_addr   ),
     .csr_valid   (csr_valid  ),
     .csr_rrsp    (csr_rrsp   ),       //csr module read rsp 
     .csr_rdata   (csr_rdata  ),       //csr read data
