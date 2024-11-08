@@ -240,7 +240,7 @@ module toy_core
     logic [2:0]                     csr_bus_funct3      ; 
     logic [4:0]                     csr_bus_imm         ;      
     logic [ADDR_WIDTH-1:0]          csr_bus_addr        ;
-    logic [ADDR_WIDTH-1:0]          csr_bus_valid       ;
+    logic                           csr_bus_valid       ;
     logic                           csr_bus_rrsp        ;       //csr module read rsp 
     logic [ADDR_WIDTH-1:0]          csr_bus_rdata       ;       //csr read data
     logic                           csr_bus_rvalid      ;       //csr read valid 
