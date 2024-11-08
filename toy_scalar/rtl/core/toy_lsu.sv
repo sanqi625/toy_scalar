@@ -264,7 +264,7 @@ logic   [ADDR_WIDTH-1:0]        pmp_rdata   ;
 logic                           pmp_rvalid  ;
 logic                           pmp_act_rsp ;       //pmp_act_rsp: 0----normal  1----exception
 logic                           pmp_rrsp    ;
-logic   [ADDR_WIDTH-1:0]        pmp_addr    ;
+logic   [11:0]                  pmp_addr    ;
 logic   [4:0]                   pmp_csr_imm ;
 logic   [REG_WIDTH-1:0]         pmp_rs1_val ;
 logic   [2:0]                   pmp_funct3  ;
