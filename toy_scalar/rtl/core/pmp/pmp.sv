@@ -100,7 +100,7 @@ module pmp #(
                 v_pmp_addr[i]       <= 'b0;
                 v_pmp_napot_mask[i] <= 'b0;
             end 
-            else if((~v_pmp_cfg[i].lock) & v_pmp_en[i] & csr_req_op[0] & (~v_pmp_cfg_last[i].lock) & (v_pmp_cfg_last[i].a!=TOR)) begin
+            else if((~v_pmp_cfg[i].lock) & v_pmp_en[i+16] & csr_req_op[0] & (~v_pmp_cfg_last[i].lock) & (v_pmp_cfg_last[i].a!=TOR)) begin
                 v_pmp_addr[i]       <= csr_wdata;
                 v_pmp_napot_mask[i] <= pmp_napot_mask;
             end 
@@ -112,22 +112,22 @@ module pmp #(
 
         always_ff @(posedge clk or negedge rst_n) begin
             if      (~rst_n)                                    v_pmp_cfg[j*4] <= 'b0;
-            else if ((~v_pmp_cfg[j*4].lock) & v_pmp_en[j+16] & csr_req_op[0])    v_pmp_cfg[j*4] <= csr_wdata[7:0];
+            else if ((~v_pmp_cfg[j*4].lock) & v_pmp_en[j] & csr_req_op[0])    v_pmp_cfg[j*4] <= csr_wdata[7:0];
         end 
 
         always_ff @(posedge clk or negedge rst_n) begin
             if      (~rst_n)                                    v_pmp_cfg[j*4+1] <= 'b0;
-            else if ((~v_pmp_cfg[j*4+1].lock) & v_pmp_en[j+16] & csr_req_op[0])  v_pmp_cfg[j*4+1] <= csr_wdata[15:8];
+            else if ((~v_pmp_cfg[j*4+1].lock) & v_pmp_en[j] & csr_req_op[0])  v_pmp_cfg[j*4+1] <= csr_wdata[15:8];
         end 
 
         always_ff @(posedge clk or negedge rst_n) begin
             if      (~rst_n)                                    v_pmp_cfg[j*4+2] <= 'b0;
-            else if ((~v_pmp_cfg[j*4+2].lock) & v_pmp_en[j+16] & csr_req_op[0])  v_pmp_cfg[j*4+2] <= csr_wdata[23:16];
+            else if ((~v_pmp_cfg[j*4+2].lock) & v_pmp_en[j] & csr_req_op[0])  v_pmp_cfg[j*4+2] <= csr_wdata[23:16];
         end 
 
         always_ff @(posedge clk or negedge rst_n) begin
             if      (~rst_n)                                    v_pmp_cfg[j*4+3] <= 'b0;
-            else if ((~v_pmp_cfg[j*4+3].lock) & v_pmp_en[j+16] & csr_req_op[0])  v_pmp_cfg[j*4+3] <= csr_wdata[31:24];
+            else if ((~v_pmp_cfg[j*4+3].lock) & v_pmp_en[j] & csr_req_op[0])  v_pmp_cfg[j*4+3] <= csr_wdata[31:24];
         end 
 
     end endgenerate
