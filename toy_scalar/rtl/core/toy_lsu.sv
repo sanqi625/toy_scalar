@@ -48,7 +48,7 @@ module toy_lsu
     input  logic [REG_WIDTH-1:0]      csr_rs1_val         ,
     input  logic [4:0]                csr_imm             ,      
     input  logic [ADDR_WIDTH-1:0]     csr_addr            ,
-    input  logic [ADDR_WIDTH-1:0]     csr_valid           ,
+    input  logic                      csr_valid           ,
     input  logic                      csr_rrsp            ,       //csr module read rsp 
     output logic [ADDR_WIDTH-1:0]     csr_rdata           ,       //csr read data
     output logic                      csr_rvalid          ,       //csr read valid 
@@ -327,7 +327,7 @@ pmp #(
     .rst_n          (rst_n         ),
     //csr_bus
     .csr_req_en     (pmp_reg_en    ),
-    .csr_req_op     (pmp_req_op    ), //csr_op[1]---R, csr_op[0]---W
+    .csr_req_op     (pmp_reg_op    ), //csr_op[1]---R, csr_op[0]---W
     .csr_funct3     (pmp_funct3    ),
     .csr_imm        (pmp_csr_imm   ),
     .rs1_val        (pmp_rs1_val   ),

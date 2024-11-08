@@ -1,4 +1,4 @@
-import toy_pack::*;
+
 module pmp_compare #(
     parameter integer unsigned PMP_CHANNEL_NUM  = 32,
     parameter integer unsigned ADDR_WIDTH   = 32

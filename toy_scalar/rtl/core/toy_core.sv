@@ -452,7 +452,7 @@ module toy_core
         .csr_op                     (csr_bus_op                 ),       //csr_op[1]---R, csr_op[0]---W
         .csr_funct3                 (csr_bus_funct3             ), 
         .csr_imm                    (csr_bus_imm                ), 
-        .rs1_val                    (csr_rs1_val                ),     
+        .csr_rs1_val                (csr_rs1_val                ),     
         .csr_addr                   (csr_bus_addr               ),
         .csr_valid                  (csr_bus_valid              ),
         .csr_rrsp                   (csr_bus_rrsp               ),       //csr module read rsp 

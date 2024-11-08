@@ -1,4 +1,4 @@
-import toy_pack::*; 
+
 module pmp #(
     parameter integer unsigned PMP_CHANNEL_NUM  = 32    ,//the num of pmp addr and cfg
     parameter integer unsigned REQ_CHANNEL_NUM  = 3     ,//the num of addr which need to check
