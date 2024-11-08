@@ -64,7 +64,7 @@ module toy_csr
     output logic   [4:0]              csr_bus_imm         ,
     //output logic   [REG_WIDTH-1:0]    rs1_val             ,      
     output logic   [ADDR_WIDTH-1:0]   csr_bus_addr        ,
-    output logic   [ADDR_WIDTH-1:0]   csr_bus_valid       ,
+    output logic                      csr_bus_valid       ,
     output logic                      csr_bus_rrsp        ,       //csr module read rsp 
     input  logic   [ADDR_WIDTH-1:0]   csr_bus_rdata       ,       //csr read data
     input  logic                      csr_bus_rvalid      ,       //csr read valid 

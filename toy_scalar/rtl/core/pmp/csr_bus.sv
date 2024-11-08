@@ -8,7 +8,7 @@ module csr_bus #(
     input   logic   [4:0]                   csr_imm     ,
     input   logic   [REG_WIDTH-1:0]         rs1_val     ,      
     input   logic   [ADDR_WIDTH-1:0]        csr_addr    ,
-    input   logic   [ADDR_WIDTH-1:0]        csr_valid   ,
+    input   logic                           csr_valid   ,
     input   logic                           csr_rrsp    ,       //csr module read rsp 
     output  logic   [ADDR_WIDTH-1:0]        csr_rdata   ,       //csr read data
     output  logic                           csr_rvalid  ,       //csr rsp valid (include reg rsp and rdata) 
