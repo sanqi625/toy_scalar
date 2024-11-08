@@ -52,7 +52,7 @@ module csr_bus #(
                     pmp_rrsp    = csr_rrsp    ;
                     pmp_csr_imm = csr_imm     ;
                     pmp_rs1_val = rs1_val     ;
-                    //pmp_wdata   = csr_wdata   ;
+                    pmp_funct3  = csr_funct3  ;
                     pmp_reg_op  = csr_op      ;
                     pmp_reg_en  = csr_valid   ;
                     csr_rdata   = pmp_rdata   ;
@@ -64,7 +64,7 @@ module csr_bus #(
                     aia_rrsp    = csr_rrsp    ;
                     aia_csr_imm = csr_imm     ;
                     aia_rs1_val = rs1_val     ;
-                    //aia_wdata   = csr_wdata   ;
+                    aia_funct3  = csr_funct3  ;
                     aia_reg_op  = csr_op      ;
                     aia_reg_en  = csr_valid   ;
                     csr_rdata   = aia_rdata   ;
@@ -76,14 +76,14 @@ module csr_bus #(
                     pmp_rrsp    = 'b0    ;
                     pmp_csr_imm = 'b0    ;
                     pmp_rs1_val = 'b0    ;
-                    //pmp_wdata   = 'b0    ;
+                    pmp_funct3  = 'b0    ;
                     pmp_reg_op  = 'b0    ;
                     pmp_reg_en  = 'b0    ;  
                     aia_addr    = 'b0    ;
                     aia_rrsp    = 'b0    ;
                     aia_csr_imm = 'b0    ;
                     aia_rs1_val = 'b0    ;
-                    //aia_wdata   = 'b0    ;
+                    aia_funct3  = 'b0    ;
                     aia_reg_op  = 'b0    ;
                     aia_reg_en  = 'b0    ;
                     csr_rdata   = 'b0    ;
