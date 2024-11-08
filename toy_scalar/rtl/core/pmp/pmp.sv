@@ -108,6 +108,9 @@ module pmp #(
 
     end endgenerate
 
+    logic tag;
+    assign tag = (~v_pmp_cfg[0].lock) & v_pmp_en[0] & csr_req_op[0];
+    
     generate for(genvar j=0; j<(PMP_CHANNEL_NUM/4);j=j+1) begin:pmp_cfg_write_array
 
         always_ff @(posedge clk or negedge rst_n) begin
