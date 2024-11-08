@@ -246,6 +246,9 @@ module toy_core
     logic                           csr_bus_rvalid      ;       //csr read valid 
     logic                           csr_bus_reg_rsp     ;       //0---normal  1---exception
     logic [2:0]                     mode_state          ;
+    logic [ADDR_WIDTH-1:0]          fetch_req_addr      ;
+    logic [1:0]                     fetch_req_mode      ;
+    logic                           fetch_addr_pass     ;
 
     toy_ext_inter u_ext_intr(
         .clk                (clk                        ),
@@ -289,7 +292,10 @@ module toy_core
         .instruction_op     (fetched_instruction_op     ),
         .interrupt_vld      (interrupt_vld              ),
         .interrupt_rdy      (interrupt_rdy              ),
-        .interrupt_op       (interrupt_op               )
+        .interrupt_op       (interrupt_op               ),
+        .fetch_req_addr     (fetch_req_addr             ),
+        .fetch_req_mode     (fetch_req_mode             ),
+        .fetch_addr_pass    (fetch_addr_pass            )
         );
 
 
@@ -469,7 +475,12 @@ module toy_core
         .mem_req_opcode             (lsu_mem_req_opcode         ),
         .mem_ack_vld                (lsu_mem_ack_vld            ),
         .mem_ack_rdy                (lsu_mem_ack_rdy            ),
-        .mem_ack_data               (lsu_mem_ack_data           ));
+        .mem_ack_data               (lsu_mem_ack_data           ),
+        
+        .fetch_req_addr             (fetch_req_addr             ),
+        .fetch_req_mode             (fetch_req_mode             ),
+        .fetch_addr_pass            (fetch_addr_pass            )
+        );
 
 
 
