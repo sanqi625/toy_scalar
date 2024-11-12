@@ -15,7 +15,7 @@ module pmp_addr_check #(
     logic   NAPOT_hit;
     assign TOR_hit      = (req_addr >= pmp_addr_last) & (req_addr < pmp_addr);
     assign NA4_hit      = (req_addr == pmp_addr);
-    assign NAPOT_hit    = (req_addr & pmp_napot_mask) == (pmp_addr & pmp_napot_mask);
+    assign NAPOT_hit    = (req_addr | pmp_napot_mask) == (pmp_addr | pmp_napot_mask);
 
     // req_mode .........OFF----2'b00
     //                   TOR----2'b01
