@@ -104,6 +104,8 @@ module toy_csr
     logic [REG_WIDTH-1:0]   csr_wdata   ;
     logic                   csr_wren    ;
     logic [4:0]             csr_imm     ;
+    logic                   pmp_bus_valid;
+    logic                   aia_bus_valid;
 
     dcsr_t                  csr_DCSR      ;
     dcsr_t                  csr_DCSR_wr   ;
@@ -174,14 +176,16 @@ module toy_csr
     // end
 
     //csr bus 
-    assign csr_bus_valid = (csr_addr>=12'h3a0) & (csr_addr<=12'h3ef); 
+    assign pmp_bus_valid = (csr_addr>=12'h3a0) & (csr_addr<=12'h3ef);
+    assign aia_bus_valid = 1'b0; //need to modify 
+    assign csr_bus_valid = pmp_bus_valid | aia_bus_valid;
     assign csr_bus_op = 2'b11;
     assign csr_bus_funct3 = funct3;
     assign csr_bus_imm = csr_imm;
     assign csr_bus_addr = csr_addr;
     assign csr_bus_rrsp = 1'b1;
 
-    assign csr_wren = inst_rd_en & instruction_vld & ~csr_bus_valid;
+    assign csr_wren = inst_rd_en & instruction_vld & ((csr_bus_valid & csr_bus_rvalid) | ~csr_bus_valid);
 
     
     always_comb begin

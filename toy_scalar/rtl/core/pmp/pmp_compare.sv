@@ -50,14 +50,21 @@ module pmp_compare #(
     assign v_hit_one_hot = v_hit & v_hit_m1_n;
     assign v_hit_one_hot_m1 = v_hit_one_hot - 1;
 
-    always_comb begin : hit_find_unit
-        v_hit_index = 'b0;
-        for (integer j=PMP_CHANNEL_NUM-1;j>=0;j=j+1) begin
-            if(v_hit[j])begin 
-                v_hit_index = j;
-            end 
-        end
-    end
+    cmn_onehot2bin #(
+        .ONEHOT_WIDTH('d32)
+    ) u_onehot (
+        .onehot_in(v_hit),
+        .bin_out  (v_hit_index)
+    );
+
+    //always_comb begin : hit_find_unit
+    //    v_hit_index = 'b0;
+    //    for (integer j=PMP_CHANNEL_NUM-1;j>=0;j=j+1) begin
+    //        if(v_hit[j])begin 
+    //            v_hit_index = j;
+    //        end 
+    //    end
+    //end
 
     //to mux
     assign v_hit_entry = v_hit_is_all0 ? 8'b0 : v_pmp_cfg[v_hit_index];
