@@ -295,7 +295,11 @@ csr_bus #(
     .pmp_rs1_val (pmp_rs1_val),
     .pmp_funct3  (pmp_funct3 ),
     .pmp_reg_op  (pmp_reg_op ),
-    .pmp_reg_en  (pmp_reg_en )
+    .pmp_reg_en  (pmp_reg_en ),
+
+    .aia_rdata   ('b0        ),
+    .aia_rvalid  ('b0        ),
+    .aia_act_rsp ('b0        )
 );
 
 //===================================================================
