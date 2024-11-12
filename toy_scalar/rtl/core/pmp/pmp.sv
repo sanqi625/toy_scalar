@@ -100,7 +100,7 @@ module pmp #(
                 v_pmp_addr[i]       <= 'b0;
                 v_pmp_napot_mask[i] <= 'b0;
             end 
-            else if((~v_pmp_cfg[i].lock) & v_pmp_en[i+16] & csr_req_op[0] & (~v_pmp_cfg_last[i].lock) & (v_pmp_cfg_last[i].a!=TOR)) begin
+            else if((~v_pmp_cfg[i].lock) & v_pmp_en[i+16] & csr_req_op[0] & (~((v_pmp_cfg_last[i].lock) & (v_pmp_cfg_last[i].a==TOR)))) begin
                 v_pmp_addr[i]       <= csr_wdata;
                 v_pmp_napot_mask[i] <= pmp_napot_mask;
             end 
