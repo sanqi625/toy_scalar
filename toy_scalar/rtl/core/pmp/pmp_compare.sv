@@ -1,7 +1,8 @@
 
 module pmp_compare #(
-    parameter integer unsigned PMP_CHANNEL_NUM  = 32,
-    parameter integer unsigned ADDR_WIDTH   = 32
+    parameter  integer unsigned PMP_CHANNEL_NUM  = 32,
+    parameter  integer unsigned ADDR_WIDTH       = 32,
+    localparam integer unsigned BIN_WIDTH        = $clog2(PMP_CHANNEL_NUM)
 ) (
     input  logic [ADDR_WIDTH-1:0]         req_addr                                ,
     input  logic [2:0]                    mode_state                              ,
@@ -22,7 +23,7 @@ module pmp_compare #(
     logic [PMP_CHANNEL_NUM-1:0]           v_hit_m1_n                            ;
     logic [PMP_CHANNEL_NUM-1:0]           v_hit_one_hot                         ;
     logic [PMP_CHANNEL_NUM-1:0]           v_hit_one_hot_m1                      ;
-    logic [$clog2(PMP_CHANNEL_NUM)-1:0]   v_hit_index                           ;
+    logic [BIN_WIDTH-1:0]                 v_hit_index                           ;
     logic [ADDR_WIDTH-1:0]                pmp_addr_last  [PMP_CHANNEL_NUM-1:0]  ;
     pmp_cfg_t                             v_hit_entry                           ;
 
@@ -50,12 +51,14 @@ module pmp_compare #(
     assign v_hit_one_hot = v_hit & v_hit_m1_n;
     assign v_hit_one_hot_m1 = v_hit_one_hot - 1;
 
-    cmn_onehot2bin #(
-        .ONEHOT_WIDTH('d32)
-    ) u_onehot (
-        .onehot_in(v_hit),
-        .bin_out  (v_hit_index)
-    );
+    always_comb begin: hit_find_unit
+        v_hit_index = {BIN_WIDTH{1'b0}};
+        for (int i=0; i<PMP_CHANNEL_NUM; i++) begin
+            if (v_hit[i]) begin
+                v_hit_index = BIN_WIDTH'(i);
+            end
+        end
+    end
 
     //always_comb begin : hit_find_unit
     //    v_hit_index = 'b0;
