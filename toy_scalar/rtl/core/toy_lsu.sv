@@ -84,6 +84,8 @@ module toy_lsu
     logic                   lrsc_tag_valid      ;
     
     logic [REG_WIDTH-1:0]   rs2_val_r           ;
+    logic                   mem_req_vld_tmp     ;
+    logic                   lsu_access_exception;
 
     assign inst_commit_en_wr = is_store && instruction_vld & instruction_rdy;
     assign inst_commit_en_rd = reg_wr_en;
@@ -100,7 +102,7 @@ module toy_lsu
     assign is_sc    = (opcode == OPC_AMO) & (instruction_pld[31:27] == AMOSC); 
 
     assign mem_ack_rdy = 1'b1;
-    assign instruction_rdy = is_amo ? (amo_store & mem_req_vld & mem_req_rdy) : 1'b1;
+    assign instruction_rdy = lsu_access_exception ? 1'b1 : (is_amo ? (amo_store & mem_req_vld & mem_req_rdy) : 1'b1);
 
 //===================================================================
 // state control
@@ -108,6 +110,7 @@ module toy_lsu
 
     always_ff @(posedge clk or negedge rst_n) begin
         if(~rst_n)                                          amo_store <= 1'b0;
+        else if(lsu_access_exception)                       amo_store <= 1'b0;
         else if(amo_store) begin
             if(mem_req_vld & mem_req_rdy)                  amo_store <= 1'b0;
         end
@@ -188,7 +191,8 @@ module toy_lsu
     assign word_offset      = raw_address[1:0]  ;
     //assign mem_req_addr     = amo_store ? raw_address_r : raw_address               ;
     assign mem_req_addr     = raw_address ;
-    assign mem_req_vld      = amo_store ? 1'b1 : instruction_vld                    ; // need more status bit to wait amo read finish.
+    assign mem_req_vld_tmp  = amo_store ? 1'b1 : instruction_vld                    ; // need more status bit to wait amo read finish.
+    assign mem_req_vld      = lsu_access_exception ? 1'b0 : mem_req_vld_tmp         ;
     assign mem_req_opcode   = (is_store | amo_store) ? TOY_BUS_WRITE : TOY_BUS_READ ;
 
     always_comb begin
@@ -309,12 +313,11 @@ csr_bus #(
 logic [ADDR_WIDTH-1:0]              v_req_addr   [1:0]  ;
 logic [1:0]                         v_req_mode   [1:0]  ; //instruction mode：01--load; 10--store; 11--fetc
 logic [1:0]                         v_pass              ;
-logic                               lsu_access_exception;
 
 //lsu addr check
 assign v_req_addr[0] = raw_address;
 assign v_req_mode[0] = (is_store | amo_store) ? 2'b10 : 2'b01;
-assign lsu_access_exception = ~v_pass[0] & mem_req_vld;
+assign lsu_access_exception = ~v_pass[0] & mem_req_vld_tmp;
 
 //fetch addr check
 assign v_req_addr[1] = fetch_req_addr;
