@@ -190,7 +190,7 @@ module toy_fecth3
 
     assign interrupt_rdy                        = instruction_rdy;
     //assign interrupt_en                         = interrupt_vld && interrupt_rdy;
-    assign interrupt_en                         = interrupt_vld & fetch_addr_exception;
+    assign interrupt_en                         = interrupt_vld | fetch_addr_exception;
 
     //instruction op bit[32] is 1 indicates the instruction is trap, bit[32] is 0 indicates is the real instrcution
     //instruction op trap bit[31] is 1 indicates that interrupt, otherwise is exception
