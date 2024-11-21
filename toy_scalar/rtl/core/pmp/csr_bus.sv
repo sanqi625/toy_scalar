@@ -12,12 +12,12 @@ module csr_bus #(
     input   logic                           csr_rrsp    ,       //csr module read rsp 
     output  logic   [ADDR_WIDTH-1:0]        csr_rdata   ,       //csr read data
     output  logic                           csr_rvalid  ,       //csr rsp valid (include reg rsp and rdata) 
-    output  logic                           csr_reg_rsp ,       //0---normal  1---exception
+    output  logic   [2:0]                   csr_reg_rsp ,       //bit2: 0--normal 1--exception bit[1:0]: cause
 
     //pmp port
     input   logic   [ADDR_WIDTH-1:0]        pmp_rdata   ,
     input   logic                           pmp_rvalid  ,
-    input   logic                           pmp_act_rsp ,       //pmp_act_rsp: 0----normal  1----exception
+    input   logic   [2:0]                   pmp_act_rsp ,       //bit2: 0--normal 1--exception bit[1:0]: cause
     output  logic                           pmp_rrsp    ,
     output  logic   [ADDR_WIDTH-1:0]        pmp_addr    ,
     output  logic   [4:0]                   pmp_csr_imm ,
@@ -29,7 +29,7 @@ module csr_bus #(
     //aia port
     input   logic   [ADDR_WIDTH-1:0]        aia_rdata   ,
     input   logic                           aia_rvalid  ,
-    input   logic                           aia_act_rsp ,      //aia_act_rsp: 0----normal  1----exception
+    input   logic   [2:0]                   aia_act_rsp ,      //bit2: 0--normal 1--exception bit[1:0]: cause
     output  logic                           aia_rrsp    ,
     output  logic   [ADDR_WIDTH-1:0]        aia_addr    ,
     output  logic   [4:0]                   aia_csr_imm ,

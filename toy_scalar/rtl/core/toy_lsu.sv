@@ -355,9 +355,9 @@ pmp #(
 // Exception
 //===================================================================
     assign lsu_pc                               = pc;
-    assign lsu_exception_cause                  = lsu_access_exception ? ((is_lr|is_sc|is_store) ? 32'd7 
-                                                                                                  :32'd5) 
-                                                                                                  :32'd0;
+    assign lsu_exception_cause                  = lsu_access_exception ? ((is_sc|is_store) ? 32'd7  //store or amo access fault
+                                                                                            :32'd5) //load access fault
+                                                                                            :32'd0;
     assign lsu_exception_en                     = lsu_access_exception;
     assign lsu_exception_inst[INST_WIDTH-1:0]   = instruction_pld[INST_WIDTH-1:0];
 

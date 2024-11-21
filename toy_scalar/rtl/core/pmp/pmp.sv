@@ -13,17 +13,16 @@ module pmp #(
     input   logic [2:0]                         csr_funct3                          ,
     input   logic [4:0]                         csr_imm                             ,
     input   logic [REG_WIDTH-1:0]               rs1_val                             ,
-    //input   logic [31:0]                        csr_wdata                       ,
     input   logic                               csr_rrsp                            ,
     input   logic [11:0]                        csr_req_addr                        ,
     output  logic [31:0]                        csr_req_rdata                       ,
     output                                      csr_req_rvalid                      ,
-    output  logic                               csr_act_rsp                         ,
+    output  logic [2:0]                         csr_act_rsp                         , //bit2: 0--normal 1--exception bit[1:0]: cause
  
     input   logic [2:0]                         mode_state                          ,
 
     input   logic [ADDR_WIDTH-1:0]              v_req_addr   [REQ_CHANNEL_NUM-1:0]  ,
-    input   logic [1:0]                         v_req_mode   [REQ_CHANNEL_NUM-1:0]  ,//instruction mode：01--load; 10--store; 11--fetc
+    input   logic [1:0]                         v_req_mode   [REQ_CHANNEL_NUM-1:0]  , //instruction mode：01--load; 10--store; 11--fetc
     output  logic [REQ_CHANNEL_NUM-1:0]         v_pass                             
 );
 
@@ -69,7 +68,8 @@ module pmp #(
     end
 
     //pmp rsp normal or exception
-    assign  csr_act_rsp = (mode_state!=MACHINE) & csr_req_en;
+    assign csr_act_rsp[2] = (mode_state!=MACHINE) & csr_req_en;
+    assign csr_act_rsp[1:0] = 2'b0;
 
     //v_pmp_wren generation
     assign v_pmp_read_addr = csr_req_addr-'h3A0;

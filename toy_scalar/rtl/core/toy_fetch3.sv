@@ -195,7 +195,7 @@ module toy_fecth3
     //instruction op bit[32] is 1 indicates the instruction is trap, bit[32] is 0 indicates is the real instrcution
     //instruction op trap bit[31] is 1 indicates that interrupt, otherwise is exception
 
-    assign instruction_op[32:0]                  = interrupt_en  ? fetch_addr_exception ? {1'b1,32'd1} 
+    assign instruction_op[32:0]                  = interrupt_en  ? fetch_addr_exception ? {1'b1,1'b0,31'd1} 
                                                                                         : {1'b1,interrupt_op[31:0]} 
                                                                                         : 33'd0; 
 
