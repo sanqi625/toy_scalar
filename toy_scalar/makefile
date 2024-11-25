@@ -10,7 +10,7 @@ compile_jtag:
 
 compile_rtl:
 	mkdir -p $(RTL_COMPILE_OUTPUT)
-	cd $(RTL_COMPILE_OUTPUT) ;vcs -kdb -full64 -debug_access -sverilog -f $(SIM_FILELIST) -CFLAGS -DVCS +lint=PCWM +lint=TFIPC-L +define+TOY_SIM +define+DEBUG_ROM_TEST -l cmp.log -timescale=1ns/1ps
+	cd $(RTL_COMPILE_OUTPUT) ;vcs -kdb -lca -full64 -debug_access -sverilog -f $(SIM_FILELIST) -CFLAGS -DVCS +lint=PCWM +lint=TFIPC-L +define+TOY_SIM +define+DEBUG_ROM_TEST -l cmp.log -timescale=1ns/1ps
 
 compile_dbg_rtl:
 	mkdir -p $(RTL_COMPILE_OUTPUT)
