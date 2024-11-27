@@ -10,7 +10,7 @@ compile_jtag:
 
 compile_rtl:
 	mkdir -p $(RTL_COMPILE_OUTPUT)
-	cd $(RTL_COMPILE_OUTPUT) ;vcs -kdb -lca -full64 -debug_access -sverilog -f $(SIM_FILELIST) -CFLAGS -DVCS +lint=PCWM +lint=TFIPC-L +define+TOY_SIM +define+DEBUG_ROM_TEST -l cmp.log -timescale=1ns/1ps
+	cd $(RTL_COMPILE_OUTPUT) ;vcs -kdb -full64 -debug_access -sverilog -f $(SIM_FILELIST) -CFLAGS -DVCS +lint=PCWM +lint=TFIPC-L +define+TOY_SIM +define+DEBUG_ROM_TEST -l cmp.log -timescale=1ns/1ps
 
 compile_dbg_rtl:
 	mkdir -p $(RTL_COMPILE_OUTPUT)
@@ -26,7 +26,7 @@ intr:
 	${RTL_COMPILE_OUTPUT}/simv +HEX=/data/usr/jiaoyd/csr_baremental/test/interrupt/build/toy_bm/interrupt.itcm.hex +DATA_HEX=/data/usr/jiaoyd/csr_baremental/test/interrupt/build/toy_bm/interrupt.dtcm.hex +TIMEOUT=200000 +WAVE +PC=pc_trace.log
 
 hello_world:
-	${RTL_COMPILE_OUTPUT}/simv +HEX=/home/liuyunqi/jiaoyd/baremetal_hello_world/test/hello/build/toy_bm/hello.itcm.hex +DATA_HEX=/home/liuyunqi/jiaoyd/baremetal_hello_world/test/hello/build/toy_bm/hello.dtcm.hex +TIMEOUT=200000 +WAVE +PC=pc_trace.log
+	${RTL_COMPILE_OUTPUT}/simv +HEX=/data/usr/qijiahuan/baremetal_hello_world/test/hello/build/toy_bm/hello.itcm.hex +DATA_HEX=/data/usr/qijiahuan/baremetal_hello_world/test/hello/build/toy_bm/hello.dtcm.hex +TIMEOUT=200000 +WAVE +PC=pc_trace.log
 
 lint:
 	fde -file $(TOY_SCALAR_PATH)/qc/lint.tcl -flow lint
@@ -35,7 +35,7 @@ led:
 	${RTL_COMPILE_OUTPUT}/simv +HEX=/home/liuyunqi/jiaoyd/led/led_0725/toy_bm/led.itcm.hex +DATA_HEX=/home/liuyunqi/jiaoyd/led/led_0725/toy_bm/led.dtcm.hex +TIMEOUT=200000 +WAVE +PC=pc_trace.log 
 
 dhry:
-	${RTL_COMPILE_OUTPUT}/simv +HEX=/home/liuyunqi/jiaoyd/baremetal_hello_world/benchmarks/build/toy_bm/dhrystone.itcm.hex +DATA_HEX=/home/liuyunqi/jiaoyd/baremetal_hello_world/benchmarks/build/toy_bm/dhrystone.dtcm.hex +TIMEOUT=200000 +WAVE +PC=pc_trace.log 
+	${RTL_COMPILE_OUTPUT}/simv +HEX=/home/liuyunqi/jiaoyd/baremetal_hello_world/benchmarks/build/toy_bm/dhrystone.itcm.hex +DATA_HEX=/home/liuyunqi/jiaoyd/baremetal_hello_world/benchmarks/build/toy_bm/dhrystone.dtcm.hex +TIMEOUT=200000 +DEBUG +WAVE +PC=pc_trace.log 
 
 dhry_test_nop:
 	${RTL_COMPILE_OUTPUT}/simv +HEX=/home/liuyunqi/jiaoyd/dhry/dhry_0808/dhrystone.itcm.hex +DATA_HEX=/home/liuyunqi/jiaoyd/dhry/dhry_0808/dhrystone.dtcm.hex +TIMEOUT=1000000 +WAVE +PC=pc_trace.log 
@@ -52,4 +52,4 @@ print:
 verdi:
 	verdi -sv -f $(SIM_FILELIST) -ssf wave.fsdb -dbdir $(RTL_COMPILE_OUTPUT)/simv.daidir
 dhry_test:
-	${RTL_COMPILE_OUTPUT}/simv +HEX=/data/usr/qijiahuan/baremetal_hello_world/test/hello/build/toy_bm/hello.itcm.hex +DATA_HEX=/data/usr/qijiahuan/baremetal_hello_world/test/hello/build/toy_bm/hello.dtcm.hex +TIMEOUT=200000 +WAVE +PC=pc_trace.log
+	${RTL_COMPILE_OUTPUT}/simv +HEX=/data/usr/qijiahuan/baremetal_hello_world/test/csr/build/toy_bm/csr.itcm.hex +DATA_HEX=/data/usr/qijiahuan/baremetal_hello_world/test/csr/build/toy_bm/csr.dtcm.hex +TIMEOUT=20000 +WAVE +PC=pc_trace.log
