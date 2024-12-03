@@ -178,7 +178,7 @@ module toy_csr
     //csr bus 
     assign pmp_bus_valid = (csr_addr>=12'h3a0) & (csr_addr<=12'h3ef);
     assign aia_bus_valid = 1'b0; //need to modify 
-    assign csr_bus_valid = pmp_bus_valid | aia_bus_valid;
+    assign csr_bus_valid = (pmp_bus_valid | aia_bus_valid) & instruction_vld;
     assign csr_bus_op = 2'b11;
     assign csr_bus_funct3 = funct3;
     assign csr_bus_imm = csr_imm;
