@@ -44,9 +44,11 @@ module csr_bus #(
 
     assign pmp_addr_hit = (csr_addr>=12'h3a0) & (csr_addr<=12'h3ef);
     assign aia_addr_hit = (csr_addr==12'h0); //need to modify aia addr
+    logic [1:0] test;
+    assign test = {pmp_addr_hit,aia_addr_hit};
 
     always_comb begin : aia_or_pmp_port_mux
-        case ({pmp_addr_hit,aia_addr_hit})
+        case (test)
         2'b10 : begin
                     pmp_addr    = csr_addr    ;
                     pmp_rrsp    = csr_rrsp    ;
