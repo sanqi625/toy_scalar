@@ -315,12 +315,12 @@ logic [1:0]                         v_req_mode   [1:0]  ; //instruction mode：0
 logic [1:0]                         v_pass              ;
 
 //lsu addr check
-assign v_req_addr[0] = raw_address;
+assign v_req_addr[0] = {2'b0, raw_address[31:2]};
 assign v_req_mode[0] = (is_store | amo_store) ? 2'b10 : 2'b01;
 assign lsu_access_exception = ~v_pass[0] & mem_req_vld_tmp;
 
 //fetch addr check
-assign v_req_addr[1] = fetch_req_addr;
+assign v_req_addr[1] = {2'b0, fetch_req_addr[31:2]};
 assign v_req_mode[1] = fetch_req_mode;
 assign fetch_addr_pass = v_pass[1];
 
