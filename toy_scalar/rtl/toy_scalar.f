@@ -16,7 +16,7 @@ $TOY_SCALAR_PATH/rtl/core/toy_dispatch.sv
 $TOY_SCALAR_PATH/rtl/core/toy_lsu.sv
 $TOY_SCALAR_PATH/rtl/core/toy_alu.sv
 $TOY_SCALAR_PATH/rtl/core/toy_mext.sv
-$TOY_SCALAR_PATH/rtl/core/toy_csr.sv
+$TOY_SCALAR_PATH/rtl/core/toy_csr_os.sv
 $TOY_SCALAR_PATH/rtl/core/toy_spu.sv
 $TOY_SCALAR_PATH/rtl/core/toy_trap.sv
 $TOY_SCALAR_PATH/rtl/core/toy_commit.sv
