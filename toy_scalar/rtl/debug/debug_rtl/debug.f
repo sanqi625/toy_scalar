@@ -1,9 +1,0 @@
-$DEBUG_SCALAR_PATH/rtl/debug/debug_pack.sv
-$DEBUG_SCALAR_PATH/rtl/debug/cdc_dmi_async.sv
-$DEBUG_SCALAR_PATH/rtl/debug/debug_rom.sv
-$DEBUG_SCALAR_PATH/rtl/debug/debug_ram.sv
-$DEBUG_SCALAR_PATH/rtl/debug/dtm_jtag.sv
-$DEBUG_SCALAR_PATH/rtl/debug/access_reg_decode.sv
-$DEBUG_SCALAR_PATH/rtl/debug/dtm_reg_bnk.sv
-$DEBUG_SCALAR_PATH/rtl/debug/debug_module.sv
-$DEBUG_SCALAR_PATH/rtl/debug/debug_sys.sv
