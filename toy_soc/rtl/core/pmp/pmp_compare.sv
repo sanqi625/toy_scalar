@@ -44,17 +44,16 @@ module pmp_compare #(
 
     end endgenerate
 
-    // leading one and mux
+    //leading one and mux
     assign v_hit_is_all0 = ~(|v_hit);
     assign v_hit_m1 = v_hit - 1;
     assign v_hit_m1_n = ~v_hit_m1;
     assign v_hit_one_hot = v_hit & v_hit_m1_n;
-    assign v_hit_one_hot_m1 = v_hit_one_hot - 1;
-
+//
     always_comb begin: hit_find_unit
         v_hit_index = {BIN_WIDTH{1'b0}};
         for (int i=0; i<PMP_CHANNEL_NUM; i++) begin
-            if (v_hit[i]) begin
+            if (v_hit_one_hot[i]) begin
                 v_hit_index = BIN_WIDTH'(i);
             end
         end
@@ -62,9 +61,9 @@ module pmp_compare #(
 
     //always_comb begin : hit_find_unit
     //    v_hit_index = 'b0;
-    //    for (integer j=PMP_CHANNEL_NUM-1;j>=0;j=j+1) begin
-    //        if(v_hit[j])begin 
-    //            v_hit_index = j;
+    //    for (int j=PMP_CHANNEL_NUM-1; j>=0; j++) begin
+    //        if (v_hit[j]) begin 
+    //            v_hit_index = BIN_WIDTH'(j);
     //        end 
     //    end
     //end
