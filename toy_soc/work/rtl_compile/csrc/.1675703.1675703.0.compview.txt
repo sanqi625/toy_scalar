@@ -1,0 +1,9 @@
+{"vcs1":{"timestamp_begin":1734080699.858192026, "rt":3.36, "ut":1.67, "st":0.15}}
+Command exited with non-zero status 1
+{"vcselab":{"timestamp_begin":1734080703.291267691, "rt":11.06, "ut":0.26, "st":0.03}}
+{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1734080699.228543746}
+{"VCS_COMP_START_TIME": 1734080699.228543746}
+{"VCS_COMP_END_TIME": 1734080714.404017472}
+{"VCS_USER_OPTIONS": "-kdb -full64 -cpp g++-4.8 -cc gcc-4.8 -LDFLAGS -Wl,--no-as-needed -debug_access -sverilog -f /data/usr/qijiahuan/toy_soc/rtl/sim.f -CFLAGS -DVCS +lint=PCWM +lint=TFIPC-L +define+TOY_SIM +define+DEBUG_ROM_TEST -l cmp.log -lca -timescale=1ns/1ps"}
+{"vcs1": {"peak_mem": 1676368}}
+{"stitch_vcselab": {"peak_mem": 1676468}}

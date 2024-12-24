@@ -1,0 +1,7 @@
+Command exited with non-zero status 255
+{"vcs1":{"timestamp_begin":1734428536.117483525, "rt":2.02, "ut":0.27, "st":0.03}}
+{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1734428535.478047006}
+{"VCS_COMP_START_TIME": 1734428535.478047006}
+{"VCS_COMP_END_TIME": 1734428538.197820234}
+{"VCS_USER_OPTIONS": "-kdb -full64 -debug_access -sverilog -f /data/usr/qijiahuan/toy_soc/rtl/sim.f -CFLAGS -DVCS +lint=PCWM +lint=TFIPC-L +define+TOY_SIM +define+DEBUG_ROM_TEST -l cmp.log -timescale=1ns/1ps"}
+{"vcs1": {"peak_mem": 2153078}}

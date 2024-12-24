@@ -1,0 +1,52 @@
+/data/usr/qijiahuan/toy_soc/work/rtl_compile/simv +HEX=/data/usr/qijiahuan/baremetal_hello_world/test/pmp_test/build/toy_bm/pmp_test.itcm.hex +DATA_HEX=/data/usr/qijiahuan/baremetal_hello_world/test/pmp_test/build/toy_bm/pmp_test.dtcm.hex +TIMEOUT=20000 +WAVE +PC=pc_trace.log +REG_TRACE=reg_trace.log
+Chronologic VCS simulator copyright 1991-2022
+Contains Synopsys proprietary information.
+Compiler version T-2022.06_Full64; Runtime version T-2022.06_Full64;  Dec 24 11:22 2024
+[SYSTEM] Timeout threshold is set to 20000 cycles.
+*Verdi* Loading libsscore_vcs202206.so
+FSDB Dumper for VCS, Release Verdi_T-2022.06, Linux x86_64/64bit, 05/29/2022
+(C) 1996 - 2022 by Synopsys, Inc.
+*Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+*Verdi* : Create FSDB file 'wave.fsdb'
+*Verdi* : Begin traversing the scopes, layer (0).
+*Verdi* : Enable +all dumping.
+*Verdi* : End of traversing.
+*Verdi* : Begin traversing the MDAs, layer (0).
+*Verdi* : Enable +mda and +packedmda dumping.
+*Verdi* : End of traversing the MDAs.
+*Verdi* : fsdbDumpon - All FSDB files at 0 ps.
+[Perips][UART_INPUT] Bare Metal Init Start.
+[Perips][UART_INPUT] Bare Metal Init Finished.
+[Perips][UART_INPUT] addr_base: 90000100 region: 10 a: 0 lock: 1 ex: 1
+[Perips][UART_INPUT] addr_base: 90000118 region: 4 a: 1 lock: 1 ex: 1
+[Perips][UART_INPUT] addr_base: 900000f0 region: 8 a: 2 lock: 1 ex: 1
+[Perips][UART_INPUT] addr_base: 90000100 region: 20 a: 3 lock: 1 ex: 1
+[Perips][UART_INPUT] addr_base: 90000108 region: 4 a: 4 lock: 1 ex: 1
+[Perips][UART_INPUT] address:900000a0
+[Perips][UART_INPUT] address:90000150
+[Perips][UART_INPUT] address:90000140
+[Perips][UART_INPUT] address:900000f0
+[Perips][UART_INPUT] address:90000010
+[Perips][UART_INPUT] address:90000100
+[Perips][UART_INPUT] address:90000100
+[Perips][UART_INPUT] address:90000150
+[Perips][UART_INPUT] address:900001d0
+[Perips][UART_INPUT] address:900001c0
+[Perips][UART_INPUT] /*=================TRAP handle Begin==================*/
+[Perips][UART_INPUT] MEPC value is 80007408 
+[Perips][UART_INPUT] MCAUSE value is b 
+[Perips][UART_INPUT] MTVAL value is 00000073 
+[Perips][UART_INPUT] Trap cause is : MACHINE_ECALL
+[Perips][UART_INPUT] ECALL PC value = 80007408
+[Perips][UART_INPUT] ECALL NEXT PC value = 8000740c
+[Perips][UART_INPUT] /*=================Trap handle End=================*/
+[Perips][UART_INPUT] addresses[j]=900000a0pmp_check_err!!! addr:3e7 num:0 pmp_err_flag:0 pass_list:                                
+[SYSTEM][cycle=     312142][pc=80002c48] Receive a cmd from core, cmd[00000000] = 00000001
+[SYSTEM][cycle=     312142][pc=80002c48] Receive exit command 00000001, exit.
+receive exit signal 0, success exit.
+$finish called from file "/data/usr/qijiahuan/toy_soc/rtl/toy_env_slv.sv", line 239.
+$finish at simulation time          31214150000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 31214150000 ps
+CPU Time:     16.770 seconds;       Data structure size:   0.1Mb
+Tue Dec 24 11:22:40 2024
